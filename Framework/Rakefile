@@ -1,0 +1,123 @@
+require 'rake'
+require File.expand_path('../../SimulatorCop/config/application', __FILE__)
+
+# Rakefile to create automatically an application 
+# author Duhoux Benoît
+# version 2016
+
+@folders = {
+	"Application" => {
+		"context_declarations.json" => "{\n\t\"contexts\": {\n\t\t\"Default\": {\n\t\t}\n\t},\n\t\"dependencies\": {\n\t}\n}",
+		"context_feature_mapping.json" => "{\n}",
+		"context_feature_dependencies.json" => "{\n\t\"dependencies\": {\n\t}\n}",
+		"feature_declarations.json" => "{\n\t\"features\": {\n\t\t\"FDefault\": {\n\t\t}\n\t},\n\t\"dependencies\": {\n\t}\n}",
+		"transition_mapping.json" => "{\n}"
+	},
+	"Controllers" => {
+		"_active_controllers.html.erb" => "<%# This file contains active controllers and will be include automatically in your board in rails simulator. %>",
+		"_passive_controllers.html.erb" => "<%# This file contains passive controllers and will be include automatically in your board in rails simulator. %>"
+	}
+}
+
+task :usage do
+	puts "Usage: \nrake createApp nameApp [\"description\"]\nrake deleteApp nameApp"
+end
+
+task :default => :usage
+
+desc "Create an application"
+task :createApp do
+	args = getArgv(ARGV)
+	
+	if !File.exists?(getRootApp(args[:nameApp]))
+		puts "Creating the filesystem for #{args[:nameApp]} application."
+		createFileSystem(args[:nameApp])
+	  	
+	  	puts "Loading tasks from Rails..."
+		Rails.application.load_tasks
+		puts "Adding a board for application #{args[:nameApp]} in SimulatorCop."
+		Rake::Task['manageboard:add_board'].invoke(args[:nameApp], args[:description], getRootApp(args[:nameApp]))
+
+		puts "Your application #{args[:nameApp]} is created."
+  	else
+  		puts "Your application #{args[:nameApp]} already exists."
+  	end
+
+  	task args[:nameApp].to_sym do ; end
+  	task args[:description].to_sym do ; end if args[:description]
+end
+
+desc "Delete an application"
+task :deleteApp do
+	args = getArgv(ARGV)
+
+	if File.exists?(getRootApp(args[:nameApp]))
+		puts "Deleting the filesystem for #{args[:nameApp]} application."
+		deleteFileSystem(args[:nameApp])
+	  	
+	  	puts "Loading tasks from Rails..."
+		Rails.application.load_tasks
+		puts "Deleting a board for application #{args[:nameApp]} in SimulatorCop."
+		Rake::Task['manageboard:delete_board'].invoke(args[:nameApp])
+
+		puts "Your application #{args[:nameApp]} is deleted."
+  	else
+  		puts "Your application #{args[:nameApp]} doesn't exist."
+  	end
+
+  	task args[:nameApp].to_sym do ; end
+end
+
+private
+
+def getArgv(argv)
+	if argv.length < 2 || argv.length > 3
+		abort "Usage: \nrake createApp nameApp [\"description\"]\nrake deleteApp nameApp"
+	end
+	
+	args = {:nameApp => argv[1], :description => argv[2]}
+	if args[:nameApp].length > 100
+		abort "Name of application too long."
+	end
+
+	args
+end
+
+def getRootApp(nameApp)
+	"#{File.expand_path("..", Dir.pwd)}/#{nameApp}"
+end
+
+def createFileSystem(nameApp)
+	rootApp = getRootApp(nameApp)
+	mkdir_m(rootApp)
+	touch_m("#{rootApp}/#{nameApp}.yaml", "rootApp:\n\t#{rootApp}")
+	
+	@folders.each { 
+		|folderName, files|  
+		mkdir_m("#{rootApp}/#{folderName}")
+		files.each { 
+			|filename, content|
+			touch_m("#{rootApp}/#{folderName}/#{filename}", content)
+		}
+	}
+end
+
+def mkdir_m(filesystem)
+	if File.exists?(filesystem)
+		puts "#{filesystem} already exists."
+	else
+		Dir.mkdir(filesystem) unless File.exists?(filesystem)
+		puts "mkdir #{filesystem}"
+	end
+end
+
+def touch_m(filesystem, content)
+	puts "Creating #{filesystem}"
+	File.write("#{filesystem}", "#{content}")
+end
+
+def deleteFileSystem(nameApp)
+	rootApp = getRootApp(nameApp)
+	puts "rm -rf #{rootApp}"
+	FileUtils.rm_rf(rootApp)
+end
