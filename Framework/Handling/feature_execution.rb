@@ -17,7 +17,7 @@ require_relative '../../AppERS/Application/features/main'
 
 # Class FeatureExecution in module Handling
 #
-# authors Duhoux Benoît
+# authors Duhoux Benoît and Sarkozi David
 # Version 2016
 
 module Handling
