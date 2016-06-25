@@ -3,7 +3,7 @@ require_relative '../Application/context_definition'
 require_relative '../Application/feature_definition'
 require_relative '../Discovery/interpretation'
 require_relative '../Handling/feature_selection'
-#require_relative '../Handling/transition_selection'
+require_relative '../Handling/transition_selection'
 
 # Class Config in module Application
 #
@@ -23,7 +23,7 @@ module Application
       ContextDefinition.instance.createContextsGraph(appName)
       FeatureDefinition.instance.createFeaturesGraph(appName)
       Handling::FeatureSelection.instance.createContextsFeaturesMapping(appName)
-      #Handling::TransitionSelection.instance.createTransitionMapping(appName)
+      Handling::TransitionSelection.instance.createTransitionMapping(appName)
 
       Discovery::Interpretation.instance.interpretDefault
     end
