@@ -1,6 +1,6 @@
 require 'json'
 require_relative 'context_definition'
-require_relative 'feature_definition_mockup'
+require_relative 'feature_definition'
 
 # Class  in module Application
 #

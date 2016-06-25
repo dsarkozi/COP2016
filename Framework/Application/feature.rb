@@ -1,18 +1,19 @@
 require_relative 'entity'
+require_relative '../Utils/logger'
 
 # Class Feature in module Application
 #
-# authors Duhoux Benoît and Sarkozi David
+# authors Duhoux Benoît
 # Version 2016
 
 module Application
 
   class Feature < Entity
-	
-    def initialize(name, isAbstract, superFeatures=[], children=[])
-        super(name, isAbstract, superFeatures, children)
-    end
-		
-  end
 
+    def initialize(name, superContexts=[], children=[])
+      super(name, false, superContexts, children)
+    end
+
+  end
+  
 end

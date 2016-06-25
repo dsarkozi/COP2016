@@ -2,7 +2,7 @@ require 'singleton'
 
 # require_relative 'feature_execution_mockup'
 require_relative 'transition_selection'
-require_relative '../Application/feature_definition_mockup'
+require_relative '../Application/feature_definition'
 require_relative '../Utils/logger'
 require_relative '../Utils/hash'
 require_relative '../Utils/Exceptions/dependency_exception'

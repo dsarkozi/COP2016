@@ -1,6 +1,6 @@
 require 'singleton'
 
-require_relative 'feature_selection_mockup'
+require_relative 'feature_selection'
 require_relative '../Application/context_definition'
 require_relative '../Application/actived_entities_counters'
 require_relative '../Utils/logger'

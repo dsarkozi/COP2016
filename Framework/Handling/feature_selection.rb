@@ -1,7 +1,7 @@
 require 'singleton'
 
-require_relative 'feature_activation_mockup'
-require_relative '../Application/feature_definition_mockup'
+require_relative 'feature_activation'
+require_relative '../Application/feature_definition'
 require_relative '../Utils/logger'
 require_relative '../Utils/Exceptions/mapping_context_feature_exception'
 
