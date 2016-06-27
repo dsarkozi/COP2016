@@ -1,0 +1,106 @@
+{
+    "contexts": {
+        "Default": {
+            "isAbstract": false,
+            "subentities": {
+                "Temperature": {
+                    "isAbstract": true,
+                    "sensors": ["TemperatureSensor"],
+                    "subentities": {
+                        "Hot": {
+                            "condition": "(TemperatureSensor.degree > 25)"
+                        },
+                        "Normal": {
+                            "condition": "((TemperatureSensor.degree <= 25) & (TemperatureSensor.degree >= 15))"
+                        },
+                        "Cold": {
+                            "condition": "(TemperatureSensor.degree < 15)",
+                            "subentities": {
+                                "Frost": {
+                                    "condition": "(TemperatureSensor.degree < 0)",
+                                    "subentities": {
+                                        "Very Frost": {
+                                            "condition": "(TemperatureSensor.degree < -20)"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "Gps": {
+                    "isAbstract": true,
+                    "sensors": ["GpsSensor"],
+                    "subentities": {
+                        "Europe": {
+                            "condition": "(((GpsSensor.latitude < 67.190407) & (GpsSensor.latitude > 34.857088)) & ((GpsSensor.longitude > -27.509766) & (GpsSensor.longitude < 30.673828)))",
+                            "subentities": {
+                                "Belgium": {
+                                    "condition": "(((GpsSensor.latitude < 51.5) & (GpsSensor.latitude > 49.5)) & ((GpsSensor.longitude < 6.4) & (GpsSensor.longitude > 2.55)))"
+                                }
+                            }
+                        },
+                        "Unknown": {
+                            "condition": "(((GpsSensor.latitude >= 67.190407) | (GpsSensor.latitude <= 34.857088)) | ((GpsSensor.longitude <= -27.509766) & (GpsSensor.longitude >= 30.673828)))"
+                        }
+                    }
+                },
+                "Other": {
+                    "isAbstract": true,
+                    "sensors": ["OtherSensor"],
+                    "subentities": {
+                        "OtherA": {
+                            "supercontexts" : [],
+                            "policyOrder": ["Normal", "Belgium"],
+                            "condition": "(OtherSensor.letter == a)"
+                        },
+                        "OtherB": {
+                            "condition": "(OtherSensor.letter == b)"
+                        }
+                    }
+                }, 
+                "Brightness": {
+                    "isAbstract": true,
+                    "sensors": ["BrightnessSensor"],
+                    "subentities": {
+                        "High Brightness": {
+                            "condition": "(BrightnessSensor.intensity > 50)"
+                        },
+                        "Low Brightness": {
+                            "condition": "(BrightnessSensor.intensity <= 50)"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "dependencies": {
+        "Temperature": {
+            "xor": []
+        },
+        "Gps": {
+            "xor": []
+        },
+        "Other": {
+            "xor": []
+        },
+        "Brightness": {
+            "xor": []
+        },
+        "Europe": {
+            "exclusion": [
+                "Frost"
+            ]
+        },
+        "Normal": {
+            "requirement": [
+                "Europe"
+            ]
+        }, 
+        "Frost": {
+            "exclusion" : [
+                "Other"
+            ]
+        }
+    }
+}

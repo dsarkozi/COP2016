@@ -1,0 +1,55 @@
+{
+	"features": {
+		"FDefault": {
+            "subentities": {
+                "FTemperature": {
+                    "subentities": {
+                        "FHot": {
+                        },
+                        "FNormal": {
+                        },
+                        "FCold": {
+                            "subentities": {
+                                "FFrost": {
+                                    "subentities": {
+                                        "FVeryFrost": {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "FGps": {
+                    "subentities": {
+                        "FEurope": {
+                            "subentities": {
+                                "FBelgium": {
+                                }
+                            }
+                        },
+                        "FUnknown": {
+                        }
+                    }
+                }
+            }
+		}
+	},
+	"dependencies": {
+        "FTemperature": {
+            "xor": []
+        },
+        "FCold": {
+            "xor": []
+        },
+        "FFrost": {
+            "xor": []
+        }, 
+        "FGps": {
+            "xor": []
+        },
+        "FEurope": {
+            "xor": []
+        }
+	}
+}

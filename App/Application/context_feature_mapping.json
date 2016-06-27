@@ -1,0 +1,12 @@
+{
+	"Hot": "FHot",
+	"Normal": "FNormal",
+	"Cold": "FCold",
+	"Frost": "FFrost",
+	"Very Frost": "FVeryFrost",
+	"Gps": "FGps",
+	"Unknown": "FUnknown",
+	"Europe": "FEurope",
+	"Belgium": "FBelgium",
+	"Default": "FDefault"
+}
