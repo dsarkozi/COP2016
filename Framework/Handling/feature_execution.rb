@@ -1,7 +1,7 @@
 require 'singleton'
 
 require_relative '../Utils/logger'
-require_relative '../Application/Config'
+require_relative '../Application/config'
 
 # apps = Dir.glob('../../*').select { 
 #   |f| 
@@ -36,7 +36,8 @@ module Handling
 
             featureCounters = Application::FeatureDefinition.instance.activedFeaturesCounters
             current = featureCounters.getActivedEntities
-            Application::Config.instance.currentApp
+            #Application::Config.instance.currentApp
+            current
         else
             # Default feature
             #appModule = Application.const_get(Application::Config.instance.appName)
@@ -47,7 +48,8 @@ module Handling
 
             featureCounters = Application::FeatureDefinition.instance.activedFeaturesCounters
             current = featureCounters.getActivedEntities
-            Application::Config.instance.currentApp
+            #Application::Config.instance.currentApp
+            current
         end
     end
     

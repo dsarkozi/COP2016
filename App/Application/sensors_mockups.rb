@@ -7,7 +7,7 @@ require_relative '../../Framework/Application/observable'
 
 module Application
 
-  module AppTestExecution
+  module App
   
     class ApplicationSensor
 

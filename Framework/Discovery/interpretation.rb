@@ -3,7 +3,7 @@ require 'json'
 
 require_relative 'reasoning'
 require_relative 'sensor'
-require_relative '../Application/Config'
+require_relative '../Application/config'
 require_relative '../Utils/logger'
 require_relative '../Utils/Exceptions/filter_exception'
 # apps = Dir.glob('../../*').select { 
@@ -14,8 +14,8 @@ require_relative '../Utils/Exceptions/filter_exception'
 #   |app|  
 #   require_relative "#{File.dirname(__FILE__)}/#{app}/Application/my_filters"
 # }
-require_relative "../../AppTestExecution/Application/my_filters"
-require_relative "../../AppERS/Application/my_filters"
+require_relative "../../App/Application/my_filters"
+#require_relative "../../AppERS/Application/my_filters"
 
 # Class Interpretation in module Discovery
 #

@@ -25,8 +25,6 @@ def prepend_module(mod)
 				klass.class_eval "prepend " + klass_name + level.to_s + is_singleton
 			end
 		end
-		# refresh class variables
-		#klass_def.send(:initialize) unless is_singleton.empty?
 	end
 end
 
@@ -36,15 +34,19 @@ def update_feature(feature, is_active)
 		mods << tp.self
 	end
 
-  #p feature
-	# Resolve path
-  path = File.expand_path("../../Application/variations/#{feature}.rb", __FILE__)
-	# Resolve classes
-	# klasses = [Foo]
-	# Resolve modules
 	trace.enable
 	
-	load path
+	for i in 1..feature.to_i do
+	  eval("
+  module Klass#{i}
+    def feature_method
+      #{i}
+      super
+    end
+  end
+  ")
+	end
+	
 	trace.disable
 	mods.each do |mod|
 		if is_active

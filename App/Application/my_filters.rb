@@ -7,7 +7,7 @@ require_relative '../../Framework/Application/time_filter'
 
 module Application
 
-  module AppTestExecution
+  module App
 
     # It accept data each 1 seconds for temperature
     class TemperatureFilter < TimeFilter
