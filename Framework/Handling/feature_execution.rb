@@ -11,8 +11,8 @@ require_relative '../Application/Config'
 #   |app|  
 #   require_relative "#{app}/Application/features/main"
 # }
-require_relative '../../AppTestExecution/Application/features/main'
-require_relative '../../AppERS/Application/features/main'
+#require_relative "../../#{Application::Config.instance.appName}/Application/classes/main"
+#require_relative '../../AppERS/Application/features/main'
 
 
 # Class FeatureExecution in module Handling
@@ -28,18 +28,26 @@ module Handling
 
     def execute(o, featuresTransitionsToActivate, featuresTransitionsToDeactivate)
         if o
-            currentApp = Application::Config.instance.currentApp
-            currentApp.removeFeatureTransitions(featuresTransitionsToDeactivate)
-            currentApp.addFeaturesTransitions(o, featuresTransitionsToActivate)
-            Application::Config.instance.setApp(currentApp)
-            currentApp
+            #currentApp = Application::Config.instance.currentApp
+            #currentApp.removeFeatureTransitions(featuresTransitionsToDeactivate)
+            #currentApp.addFeaturesTransitions(o, featuresTransitionsToActivate)
+            #Application::Config.instance.setApp(currentApp)
+            #currentApp
+
+            featureCounters = Application::FeatureDefinition.instance.activedFeaturesCounters
+            current = featureCounters.getActivedEntities
+            Application::Config.instance.currentApp
         else
             # Default feature
-            appModule = Application.const_get(Application::Config.instance.appName)
-            app = appModule.const_get('Main').new()
-            app.addFeaturesTransitions(o, featuresTransitionsToActivate)
-            Application::Config.instance.setApp(app)
-            app
+            #appModule = Application.const_get(Application::Config.instance.appName)
+            #app = appModule.const_get('Main').new()
+            #app.addFeaturesTransitions(o, featuresTransitionsToActivate)
+            #Application::Config.instance.setApp(app)
+            #app
+
+            featureCounters = Application::FeatureDefinition.instance.activedFeaturesCounters
+            current = featureCounters.getActivedEntities
+            Application::Config.instance.currentApp
         end
     end
     
